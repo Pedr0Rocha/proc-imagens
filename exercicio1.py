@@ -4,33 +4,29 @@ Created on Thu May 12 20:54:15 2016
 
 @author: Pedro
 """
-from PIL import Image
 import numpy as np
+import cv2
 
-imagem = Image.open('Lenna.jpg')
-imagemArray = np.array(imagem)
+imagemArray = cv2.imread('Lenna.jpg', 0)
 
 #####################################################
   ################### FUNCOES ###################
 #####################################################
 
 def pontaCabeca():
-    upsideDown = imagem.rotate(180)
+    upsideDown = imagemArray[::-1,::-1]
     upsideDownArray = np.array(upsideDown)
-    output = Image.fromarray(upsideDownArray)
-    output.save('outputUpsidedown.jpg')
+    cv2.imwrite('outputUpsidedown.png', upsideDownArray)
 
 def multTile():
-    upsideDown = imagem.rotate(180)
+    upsideDown = imagemArray[::-1,::-1]
     upsideDownArray = np.array(upsideDown)
     matrixLenna = np.tile(upsideDownArray, (2,3))
-    output = Image.fromarray(matrixLenna)
-    output.save('outputTiled.jpg')
+    cv2.imwrite('outputTiled.png', matrixLenna)
 
 
 def contraste(contraste):
-    imagemTile = Image.open('outputTiled.jpg')
-    imagemArray = np.array(imagemTile)
+    imagemArray = cv2.imread('outputTiled.png', 0)
     fator = (100.0 + contraste)/ 100.0;
     fator *= fator;
     for i in range(0, len(imagemArray)):
@@ -42,20 +38,17 @@ def contraste(contraste):
             novoValor += 0.5                
             novoValor *= 255.0                
             imagemArray[i][j] = limitaVal(novoValor)
-    output = Image.fromarray(imagemArray)
-    output.save('outputContraste.jpg')
+    cv2.imwrite('outputContraste.png', imagemArray)
                         
 
 def gradient(f):
-    imagemTile = Image.open('outputTiled.jpg')
-    imagemArray = np.array(imagemTile)
+    imagemArray = cv2.imread('outputTiled.png', 0)
     for i in range(0, len(imagemArray)):
         for j in range(0, len(imagemArray[i])):
             novoValor = imagemArray[i][j]
             novoValor -= (i+j)* f;
             imagemArray[i][j] = limitaVal(novoValor)  
-    output = Image.fromarray(imagemArray)
-    output.save('outputGradient.jpg')
+    cv2.imwrite('outputGradient.png', imagemArray)
 
 def limitaVal(valor):
     if (valor < 0):

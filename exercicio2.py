@@ -5,8 +5,6 @@ Created on Thu May 19 21:19:30 2016
 @author: Pedro
 """
 import numpy as np
-import sys
-sys.path.append('C:/Python27/Lib/site-packages/')
 import cv2
 
 imagemArray = cv2.imread('imagem.png', 0)
