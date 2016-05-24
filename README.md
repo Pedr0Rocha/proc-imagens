@@ -2,5 +2,5 @@
 
 ###Trabalhos de Processamento de Imagens
 
--Trabalho 1
--Trabalho 2
+- Trabalho 1
+- Trabalho 2
