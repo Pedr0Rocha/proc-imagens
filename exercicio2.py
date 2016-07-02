@@ -16,13 +16,12 @@ class Objeto:
         self.id = id 
         self.coord = []
 
-#acha nova raiz para busca em largura, uma raiz é um pixel branco
+#uma raiz é um pixel branco
 def achaNovaRaiz(matriz):
     novaRaiz = np.where(matriz == 255)
     print "Nova raiz x =", novaRaiz[0][0], " y =", novaRaiz[1][0]
     return (novaRaiz[0][0], novaRaiz[1][0])
 
-#funcao que recebe a matriz da imagem e devolve a quantidade de objetos
 #aplica uma busca em largura com as raizes achadas, rotula e cria objetos
 def identificaObjetos(matriz):
     numObjetos = 0
@@ -43,7 +42,6 @@ def identificaObjetos(matriz):
         
     return numObjetos
 
-#busca em largura
 def buscaEmLargura(raiz, matriz, rotulo):
     fila = [(raiz[0], raiz[1])]
     
@@ -59,7 +57,7 @@ def buscaEmLargura(raiz, matriz, rotulo):
             fila.extend(vizinhos)
     return visitados
  
-#para cada node na fila da busca, insere seus vizinhos na fila (8)   
+#gerador de vizinhos, checa 8 lados
 def checa8vizinhos(v, matriz):
     x = v[0]
     y = v[1]
@@ -82,7 +80,6 @@ def checa8vizinhos(v, matriz):
         vizinhos.append((x+1, y-1))
     return vizinhos    
 
-#acha os limites superior, inferior, esquerdo e direito do objeto
 def achaLimites(coord):
     listaX, listaY = zip(*coord)
     maxX = max(listaX)
@@ -91,7 +88,6 @@ def achaLimites(coord):
     minY = min(listaY)
     return [maxX, minX, maxY, minY]
 
-#adiciona uma margem para melhor vizualizacao
 def adicionaMargem(matriz, largura, iaxis, kwargs):
     matriz[:largura[0]] = 0
     matriz[-largura[1]] = 0
@@ -108,7 +104,7 @@ while ((objetoRecortar < 1) | (objetoRecortar > len(listaObjetos))):
     objetoRecortar = raw_input("Qual dos objetos deseja recortar? \n>")
     objetoRecortar = int(objetoRecortar)
 
-#recorta objeto de acordo com seus limites e adiciona margem
+#recorta objeto de acordo com seus limites e adiciona margem para melhor vizualizacao
 limiteInferior, limiteSuperior, limiteDireita , limiteEsquerda  = achaLimites(listaObjetos[objetoRecortar-1].coord)
 objRecortado = imagemArray[limiteSuperior:limiteInferior+1, limiteEsquerda:limiteDireita+1]
 objRecortado = np.where(objRecortado!=0, 255, objRecortado)

@@ -1,4 +1,3 @@
-#histogram
 his, bins = np.histogram(a, bins = np,arange(256), density=false)
 
 hcc = np.cumsum(his).astype(float)

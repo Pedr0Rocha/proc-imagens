@@ -9,13 +9,13 @@ import cv2
 
 imagemArray = cv2.imread('Lenna.jpg', 0)
 
-#funcao que vira a imagem de ponta cabeca
+#vira a imagem de ponta cabeca
 def pontaCabeca():
     upsideDown = imagemArray[::-1,::-1]
     upsideDownArray = np.array(upsideDown)
     cv2.imwrite('outputUpsidedown.png', upsideDownArray)
 
-#funcao que multiplica a imagem usando tile
+#multiplica a imagem usando tile
 def multTile():
     upsideDown = imagemArray[::-1,::-1]
     upsideDownArray = np.array(upsideDown)
@@ -38,7 +38,7 @@ def contraste(contraste):
             imagemArray[i][j] = limitaVal(novoValor)
     cv2.imwrite('outputContraste.png', imagemArray)
                         
-#funcao que aplica gradiente em diagonal na imagem
+#aplica gradiente em diagonal na imagem
 def gradient(f):
     imagemArray = cv2.imread('outputTiled.png', 0)
     for i in range(0, len(imagemArray)):
@@ -48,7 +48,6 @@ def gradient(f):
             imagemArray[i][j] = limitaVal(novoValor)  
     cv2.imwrite('outputGradient.png', imagemArray)
 
-#delimita valores de pixels (0, 255)
 def limitaVal(valor):
     if (valor < 0):
         valor = 0;
