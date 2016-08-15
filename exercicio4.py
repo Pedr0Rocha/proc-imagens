@@ -57,13 +57,13 @@ imagemLab = cv2.cvtColor(outputLAB, cv2.COLOR_LAB2BGR)
 cv2.imshow('Imagem Original', imagemArray)
 
 cv2.imshow('Gamma Correction - RGB', outputRGB)
-cv2.imwrite('outputGammaCorrection.jpg', outputRGB)
+#cv2.imwrite('outputGammaCorrectionRGB.jpg', outputRGB)
 
-cv2.imshow('Gamma Correction - HSV', outputHSV)
-cv2.imwrite('outputGammaCorrection.jpg', outputHSV)
+cv2.imshow('Gamma Correction - HSV', imagemHsv)
+#cv2.imwrite('outputGammaCorrectionHSV.jpg', imagemHsv)
 
-cv2.imshow('Gamma Correction - LAB', outputLAB)
-cv2.imwrite('outputGammaCorrection.jpg', outputLAB)
+cv2.imshow('Gamma Correction - LAB', imagemLab)
+#cv2.imwrite('outputGammaCorrectionLAB.jpg', imagemLab)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()

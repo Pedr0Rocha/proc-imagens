@@ -96,7 +96,8 @@ def adicionaMargem(matriz, largura, iaxis, kwargs):
 #cria output rotulado
 qtaObjs = identificaObjetos(imagemArray)    
 print "Quantidade de Objetos:", qtaObjs
-cv2.imwrite('outputRotulado.png', imagemArray)
+#cv2.imshow('Output Rotulado', imagemArray)
+#cv2.imwrite('outputRotulado.png', imagemArray)
 
 #escolhe objeto a ser recortado
 objetoRecortar = -1
@@ -110,4 +111,8 @@ objRecortado = imagemArray[limiteSuperior:limiteInferior+1, limiteEsquerda:limit
 objRecortado = np.where(objRecortado!=0, 255, objRecortado)
 objRecortado = np.lib.pad(objRecortado, 3, adicionaMargem)
 
-cv2.imwrite('objRecortado.png', objRecortado)
+cv2.imshow('Objeto Recortado', objRecortado)
+#cv2.imwrite('objRecortado.png', objRecortado)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()

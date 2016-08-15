@@ -38,8 +38,8 @@ p3 = np.uint8(p3)
 
 #concatena o vetor de 2 em 2 ... (p1,p2)...(p3)        
 paleta = np.dstack((np.dstack((p1,p2)), p3))
-#cv2.imshow('Paleta de Cores', paleta)
-cv2.imwrite('outputPaleta.jpg', paleta)
+cv2.imshow('Paleta de Cores', paleta)
+#cv2.imwrite('outputPaleta.jpg', paleta)
 
 paleta = paleta[::, 0]
 
@@ -50,8 +50,8 @@ imagemPaleta = np.zeros((img.shape[0], img.shape[1], 3))
 imagemPaleta[::, ::] = paleta[img[::, ::]]
 imagemPaleta = np.uint8(imagemPaleta)
 
-#cv2.imshow('Imagem Final', imagemPaleta)
-cv2.imwrite('outputColorido.jpg', imagemPaleta)
+cv2.imshow('Imagem Final', imagemPaleta)
+#cv2.imwrite('outputColorido.jpg', imagemPaleta)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()

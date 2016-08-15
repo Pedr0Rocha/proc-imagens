@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Jul 2 13:12:42 2016
+Created on Sat Aug 2 13:12:42 2016
 
 @author: Pedro
 """
@@ -22,7 +22,6 @@ descResult = np.complex_(np.zeros(len(complexEdges)))
 for i in range(numDescs):
     dft = np.fft.fft(complexEdges)
     descResult += dft
-    complexEdges = np.roll(complexEdges, 1)
 
 descResult = descResult/numDescs
 output = np.fft.ifft(descResult)
@@ -32,6 +31,8 @@ blackBgImg[np.uint8(output.real), np.uint8(output.imag)] = 255
 
 blackBgImg = np.uint8(blackBgImg)
 
-cv2.imshow("Output", blackBgImg)
+windowName = "Output " + str(numDescs) + " Descritores" 
+cv2.imshow(windowName, blackBgImg)
+#cv2.imwrite('outputFourier.jpg', blackBgImg)
 cv2.waitKey(0)
 cv2.destroyAllWindows()

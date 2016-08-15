@@ -27,16 +27,11 @@ def contraste(contraste):
     imagemArray = cv2.imread('outputTiled.png', 0)
     fator = (100.0 + contraste)/ 100.0;
     fator *= fator;
-    for i in range(0, len(imagemArray)):
-        for j in range(0, len(imagemArray[i])):
-            novoValor = imagemArray[i][j]                
-            novoValor /= 255.0                
-            novoValor -= 0.5                
-            novoValor *= fator                
-            novoValor += 0.5                
-            novoValor *= 255.0                
-            imagemArray[i][j] = limitaVal(novoValor)
-    cv2.imwrite('outputContraste.png', imagemArray)
+    imagemArray = imagemArray / 255.0
+    imagemArray = (imagemArray - 0.5) * fator
+    imagemArray = (imagemArray + 0.5) * 255.0
+    cv2.imshow('Output Contraste', imagemArray)
+    #cv2.imwrite('outputContraste.png', imagemArray)
                         
 #aplica gradiente em diagonal na imagem
 def gradient(f):
@@ -46,7 +41,8 @@ def gradient(f):
             novoValor = imagemArray[i][j]
             novoValor -= (i+j)* f;
             imagemArray[i][j] = limitaVal(novoValor)  
-    cv2.imwrite('outputGradient.png', imagemArray)
+    cv2.imshow('Output Gradiente', imagemArray)
+    #cv2.imwrite('outputGradient.png', imagemArray)
 
 def limitaVal(valor):
     if (valor < 0):
@@ -58,8 +54,11 @@ def limitaVal(valor):
 pontaCabeca()
 multTile()
 
-contFator = 100
+contFator = 50.0
 contraste(contFator)
 
 gradFator = 0.15;
 gradient(gradFator)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
