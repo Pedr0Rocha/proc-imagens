@@ -7,41 +7,63 @@ Created on Sat Jul 2 13:12:42 2016
 import numpy as np
 import cv2
 
-imagemArray = cv2.imread('Creepy.jpg', 0)
+imagemArray = cv2.imread('Creepy.jpg', 1)
+imagemHsv = cv2.cvtColor(imagemArray, cv2.COLOR_BGR2HSV)
+imagemLab = cv2.cvtColor(imagemArray, cv2.COLOR_BGR2LAB)
 
-gamma = 1.5
-gammaCorrectionValue = 1.0 / gamma
+gamma = 5
+inputGamma = float(input('Digite o valor de gamma para aplicar a correção > '))
 
-def buildLookUpTable(imgArray, gammaValue):
-	LUT = np.arange(0, 256)
-	lutIndex = 0;
-	for i in range(0, len(imgArray)):
-		for j in range(0, len(imgArray[i])):
-			normalizedPixel = imgArray[i][j] / 255.0
-			correctedPixel = pow(normalizedPixel, gammaValue) * 255
-			correctedPixel = pixelLimitValue(correctedPixel)
-			LUT[lutIndex] = correctedPixel
-			lutIndex = lutIndex + 1
-	return LUT
-
-def gammaCorrection(imgArray, gammaValue):
-	imgArray = imgArray/255.0
-	imgArray = cv2.pow(imgArray, gammaValue)
+def normalize(imgArray):
+	maxValue = float(np.max(imgArray))
+	minValue = float(np.min(imgArray))
+	imgArray = (imgArray - minValue) / (maxValue - minValue)
 	return imgArray
 
-def pixelLimitValue(value):
-    if (value < 0):
-        value = 0;
-    if (value > 255):
-        value = 255;
-    return value
+def gammaCorrection(imgArray, gammaValue):
+	maxValue = float(np.max(imgArray))
+	imgArray = normalize(imgArray)
+	imgArray = imgArray**gammaValue
+	imgArray = maxValue * imgArray
+	return imgArray
 
-LUT = buildLookUpTable(imagemArray, gammaCorrectionValue)
-print LUT
+# aplica somente no channel 2
+def gammaCorrectionHSV(imgArray, gammaValue):
+	maxValue = float(np.max(imgArray))
+	imgArray = normalize(imgArray)
+	imgArray[:, :, 2] = imgArray[:, :, 2]**gammaValue
+	imgArray = maxValue * imgArray
+	return imgArray
 
-imagemArray = gammaCorrection(imagemArray, gammaCorrectionValue)
+# aplica somente no channel 0
+def gammaCorrectionLAB(imgArray, gammaValue):
+	maxValue = float(np.max(imgArray))
+	imgArray = normalize(imgArray)
+	imgArray[:, :, 0] = imgArray[:, : , 0]**gammaValue
+	imgArray = maxValue * imgArray
+	return imgArray
 
-#cv2.imshow('Resultado Gamma Correction', imagemArray)
-#cv2.imwrite('outputGammaCorrection.jpg', imagemArray)
-#cv2.waitKey(0)
-#cv2.destroyAllWindows()
+outputRGB = gammaCorrection(imagemArray, inputGamma)
+outputHSV = gammaCorrectionHSV(imagemHsv, inputGamma)
+outputLAB = gammaCorrectionLAB(imagemLab, inputGamma)
+
+outputRGB = np.uint8(outputRGB)
+outputHSV = np.uint8(outputHSV)
+outputLAB = np.uint8(outputLAB)
+
+imagemHsv = cv2.cvtColor(outputHSV, cv2.COLOR_HSV2BGR)
+imagemLab = cv2.cvtColor(outputLAB, cv2.COLOR_LAB2BGR)
+
+cv2.imshow('Imagem Original', imagemArray)
+
+cv2.imshow('Gamma Correction - RGB', outputRGB)
+cv2.imwrite('outputGammaCorrection.jpg', outputRGB)
+
+cv2.imshow('Gamma Correction - HSV', outputHSV)
+cv2.imwrite('outputGammaCorrection.jpg', outputHSV)
+
+cv2.imshow('Gamma Correction - LAB', outputLAB)
+cv2.imwrite('outputGammaCorrection.jpg', outputLAB)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
