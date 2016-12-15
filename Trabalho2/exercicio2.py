@@ -112,7 +112,7 @@ objRecortado = np.where(objRecortado!=0, 255, objRecortado)
 objRecortado = np.lib.pad(objRecortado, 3, adicionaMargem)
 
 cv2.imshow('Objeto Recortado', objRecortado)
-#cv2.imwrite('objRecortado.png', objRecortado)
+cv2.imwrite('objRecortado.png', objRecortado)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()

@@ -33,6 +33,7 @@ blackBgImg = np.uint8(blackBgImg)
 
 windowName = "Output " + str(numDescs) + " Descritores" 
 cv2.imshow(windowName, blackBgImg)
-#cv2.imwrite('outputFourier.jpg', blackBgImg)
+cv2.imwrite('outputFourier.jpg', blackBgImg)
+
 cv2.waitKey(0)
 cv2.destroyAllWindows()

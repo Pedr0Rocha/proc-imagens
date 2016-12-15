@@ -42,7 +42,7 @@ def gradient(f):
             novoValor -= (i+j)* f;
             imagemArray[i][j] = limitaVal(novoValor)  
     cv2.imshow('Output Gradiente', imagemArray)
-    #cv2.imwrite('outputGradient.png', imagemArray)
+    cv2.imwrite('outputGradient.png', imagemArray)
 
 def limitaVal(valor):
     if (valor < 0):
